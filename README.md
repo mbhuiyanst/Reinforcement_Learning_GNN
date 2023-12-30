@@ -3,6 +3,15 @@
 Graph Neural Networks
 These are networks that directly operate on the graph structure. Graph Neural Networks are typically used for the purposes of node classification, edge classification or a classification of the network as a whole. The typical Graph Neural Network learns from two matrices that are constructed from the underlying graph.
 
+Feature Descripton Matrix (H): Aggregate of features from all nodes of the network. 
+
+
+
+Adjacency Matrix (A): Encodes the Structure of Edges. 
+A Typical layer of a Graph Neural Network can be compactly represented by the following mathematical expression:
+
+H(l+1)=f(H(l),A)
+
 How GNN used to extract the feature of Graph Nodes
 
 Message Passing Neural Networks (MPNNs) are a type of neural network designed for processing graph-structured data. The basic idea behind MPNNs is to iteratively update the hidden states of nodes in a graph by passing and aggregating information between neighboring nodes. This enables the network to capture complex relationships and patterns within the graph.
