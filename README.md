@@ -32,6 +32,14 @@ Step 4: Computation of Final Output Features
 Now we compute the learned features of nodes. σ is a Non-Linear Transformation.
 h′i→=σ(∑j∈NαijWh′j→)
 
+Step 5: Computation of Multiple Attention Mechanisms
+In order to improve the stability of the learning process Multi-head attention is employed. We compute multiple different attention maps and finally aggregate all the learned representations.
+
+h′i→=σ(1K∑k=1K∑j∈NαkijWkh′j→)
+K denotes the number of independant attention maps used.
+
+
+
 
 
 How GNN used to extract the feature of Graph Nodes
