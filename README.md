@@ -12,6 +12,8 @@ A Typical layer of a Graph Neural Network can be compactly represented by the fo
 
 H(l+1)=f(H(l),A)
 
+The Adjacency Matrix is binary with 1 denoting the presence of a edge between the nodes that are given by the respective matrix indices. A 0 denotes the absence of an edge. Each node is connected to itself. The matrix is binary as the graph under consideration is non-directional and non-weighted. 
+
 How GNN used to extract the feature of Graph Nodes
 
 Message Passing Neural Networks (MPNNs) are a type of neural network designed for processing graph-structured data. The basic idea behind MPNNs is to iteratively update the hidden states of nodes in a graph by passing and aggregating information between neighboring nodes. This enables the network to capture complex relationships and patterns within the graph.
