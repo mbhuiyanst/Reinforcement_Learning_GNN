@@ -44,7 +44,7 @@ K denotes the number of independant attention maps used.
 
 How GNN used to extract the feature of Graph Nodes
 
-Message Passing Neural Networks (MPNNs) are a type of neural network designed for processing graph-structured data. The basic idea behind MPNNs is to iteratively update the hidden states of nodes in a graph by passing and aggregating information between neighboring nodes. This enables the network to capture complex relationships and patterns within the graph.
+Message Passing Neural Networks (MPNNs) are a type of neural network designed for processing graph-structured data. This introduces a general framework for learning features on graphs based on message passing and can handle graph data containing both node and edge features.The basic idea behind MPNNs is to iteratively update the hidden states of nodes in a graph by passing and aggregating information between neighboring nodes. This enables the network to capture complex relationships and patterns within the graph.
 Here's a step-by-step explanation of how MPNNs work for feature extraction from a graph:
 
 1. Initialization:
