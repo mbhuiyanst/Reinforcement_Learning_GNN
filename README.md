@@ -118,6 +118,33 @@ nx.draw_networkx_edges(H, pos, width=list(edge_weights), edge_color=list(edge_we
 plt.show()
 
 
+Types of Graph Neural Networks:
+
+There are several types of neural networks, and most of them have some variation of Convolutional Neural Networks. In this section, we will be learning about the most popular GNNs. 
+
+Graph Convolutional Networks (GCNs) are similar to traditional CNNs. It learns features by inspecting neighboring nodes. GNNs aggregate node vectors, pass the result to the dense layer, and apply non-linearity using the activation function. In short, it consists of Graph convolution, linear layer, and non-learner activation function. There are two major types of GCNs: Spatial Convolutional Networks and Spectral Convolutional Networks.
+
+Graph Auto-Encoder Networks learn graph representation using an encoder and attempt to reconstruct input graphs using a decoder. The encoder and decoders are joined by a bottleneck layer. They are commonly used in link prediction as Auto-Encoders are good at dealing with class balance. 
+
+Recurrent Graph Neural Networks(RGNNs) learn the best diffusion pattern, and they can handle multi-relational graphs where a single node has multiple relations. This type of graph neural network uses regularizers to boost smoothness and eliminate over-parameterization. RGNNs use less computation power to produce better results. They are used in generating text, machine translation, speech recognition, generating image descriptions, video tagging, and text summarization.
+
+Gated Graph Neural Networks (GGNNs) are better than the RGNNs in performing tasks with long-term dependencies. Gated Graph Neural Networks improve Recurrent Graph Neural Networks by adding a node, edge, and time gates on long-term dependencies. Similar to Gated Recurrent Units (GRUs), the gates are used to remember and forget information in different states. 
+
+Application of Graph Neural Network:
+
+Graph Classification: we use this to classify graphs into various categories. Its applications are social network analysis and text classification.
+
+Node Classification: this task uses neighboring node labels to predict missing node labels in a graph. 
+
+Link Prediction: predicts the link between a pair of nodes in a graph with an incomplete adjacency matrix. It is commonly used for social networks. 
+
+Community Detection: divides nodes into various clusters based on edge structure. It learns from edge weights, and distance and graph objects similarly. 
+
+Graph Embedding: maps graphs into vectors, preserving the relevant information on nodes, edges, and structure.
+
+Graph Generation: learns from sample graph distribution to generate a new but similar graph structure. 
+
+
 
 # Reinforcement_Learning_GNN
 
