@@ -9,7 +9,7 @@ Graphs are excellent in dealing with complex problems with relationships and int
 
 Graphs with NetworkX:
 
-The code below is influenced by Daniel Holmberg's blog on Graph Neural Networks in Python.
+The code below is influenced by Daniel Holmberg's blog and I have extended further on Graph Neural Networks in Python.
 
 1.Create networkx’s DiGraph object “H”
 
