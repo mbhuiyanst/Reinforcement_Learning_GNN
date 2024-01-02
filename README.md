@@ -1,3 +1,24 @@
+##### Introduction to Graph Neural Networks (GNNs) #######
+
+What is a Graph?
+
+A Graph is the type of data structure that contains nodes and edges. A node can be a person, place, or thing, and the edges define the relationship between nodes. The edges can be directed and undirected based on directional dependencies. 
+
+Graphs are excellent in dealing with complex problems with relationships and interactions. They are used in pattern recognition, social networks analysis, recommendation systems, and semantic analysis.
+
+
+Graphs with NetworkX:
+
+The code below is influenced by Daniel Holmberg's blog on Graph Neural Networks in Python.
+
+1.Create networkx’s DiGraph object “H”
+
+2.Add nodes that contain different labels, colors, and size
+3.Add edges to create a relationship between two nodes. For example, “(0,1)” means that 0 has a directional dependency on 1. We will create bidirectional relationships by adding “(1,0)”
+4.Extract colors and sizes in the form of lists
+5.Plot the graph using networkx’s draw function
+
+
 # Reinforcement_Learning_GNN
 
 ###https://collab.dvb.bayern/display/TUMdlma/Exploiting+Edge+Features+in+Graph+Neural+Networks
