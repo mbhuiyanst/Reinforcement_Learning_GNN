@@ -7,6 +7,7 @@ A Graph is the type of data structure that contains nodes and edges. A node can 
 Graphs are excellent in dealing with complex problems with relationships and interactions. They are used in pattern recognition, social networks analysis, recommendation systems, and semantic analysis.
 
 
+
 Graphs with NetworkX:
 
 The code below is influenced by Daniel Holmberg's blog and I have extended further on Graph Neural Networks in Python.
@@ -117,6 +118,23 @@ nx.draw_networkx_edges(H, pos, width=list(edge_weights), edge_color=list(edge_we
 
 plt.show()
 
+What is Graph Neural Network:
+
+Graph Neural Networks
+These are networks that directly operate on the graph structure. Graph Neural Networks are typically used for the purposes of node classification, edge classification or a classification of the network as a whole. The typical Graph Neural Network learns from two matrices that are constructed from the underlying graph.
+
+Feature Descripton Matrix (H): Aggregate of features from all nodes of the network. 
+
+
+
+Adjacency Matrix (A): Encodes the Structure of Edges. 
+A Typical layer of a Graph Neural Network can be compactly represented by the following mathematical expression:
+
+H(l+1)=f(H(l),A)
+
+The Adjacency Matrix is binary with 1 denoting the presence of a edge between the nodes that are given by the respective matrix indices. A 0 denotes the absence of an edge. Each node is connected to itself. The matrix is binary as the graph under consideration is non-directional and non-weighted. 
+
+
 
 Types of Graph Neural Networks:
 
@@ -144,24 +162,19 @@ Graph Embedding: maps graphs into vectors, preserving the relevant information o
 
 Graph Generation: learns from sample graph distribution to generate a new but similar graph structure. 
 
+Methods associated to GNN:
+
+1. Message passing Neural netwok(MPNN)
+
+2. Graph Attention Neural Network(GAT)
+
+3. Graph Convolution Network(GCN)
 
 
 # Reinforcement_Learning_GNN
 
 ###https://collab.dvb.bayern/display/TUMdlma/Exploiting+Edge+Features+in+Graph+Neural+Networks
-Graph Neural Networks
-These are networks that directly operate on the graph structure. Graph Neural Networks are typically used for the purposes of node classification, edge classification or a classification of the network as a whole. The typical Graph Neural Network learns from two matrices that are constructed from the underlying graph.
 
-Feature Descripton Matrix (H): Aggregate of features from all nodes of the network. 
-
-
-
-Adjacency Matrix (A): Encodes the Structure of Edges. 
-A Typical layer of a Graph Neural Network can be compactly represented by the following mathematical expression:
-
-H(l+1)=f(H(l),A)
-
-The Adjacency Matrix is binary with 1 denoting the presence of a edge between the nodes that are given by the respective matrix indices. A 0 denotes the absence of an edge. Each node is connected to itself. The matrix is binary as the graph under consideration is non-directional and non-weighted. 
 
 Graph Attention Network:
 In order to overcome the drawbacks of the GCN, the GAT was proposed. It is a non-spectral approach in that the convolutions are performed directly on spatially close neighbours. Attention is a mechanism by which the network finds out how infuential the features of the neighbouring nodes are in learning the feature of the node under consideration. The basic building block of the GAT is the Graph Attention Layer. The following sections explain how the GAT works.
