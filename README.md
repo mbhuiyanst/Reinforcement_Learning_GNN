@@ -60,7 +60,17 @@ node_sizes = nx.get_node_attributes(H, "size").values()
 sizes = list(node_sizes)
 
 #Plotting Graph
+
+
 nx.draw(H, with_labels=True, node_color=colors, node_size=sizes)
+
+
+In the next step, we will convert the data structure from directional to an undirectional graph using the to_undirected() function. 
+
+
+#converting to undirected graph
+G = H.to_undirected()
+nx.draw(G, with_labels=True, node_color=colors, node_size=sizes)
 
 
 # Reinforcement_Learning_GNN
