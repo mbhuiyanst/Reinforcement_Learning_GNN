@@ -73,6 +73,52 @@ G = H.to_undirected()
 nx.draw(G, with_labels=True, node_color=colors, node_size=sizes)
 
 
+# Adding Weights on the directed graph
+import networkx as nx
+import matplotlib.pyplot as plt
+
+# Create a directed graph
+H = nx.DiGraph()
+
+# Adding nodes
+H.add_nodes_from([
+    (0, {"color": "blue", "size": 250}),
+    (1, {"color": "yellow", "size": 400}),
+    (2, {"color": "orange", "size": 150}),
+    (3, {"color": "red", "size": 600}),
+    (4, {"color": "red", "size": 500})
+])
+
+# Adding edges with weights
+H.add_edges_from([
+    (0, 1, {"weight": 1}),
+    (1, 2, {"weight": 2}),
+    (1, 0, {"weight": 0.5}),
+    (1, 3, {"weight": 1.5}),
+    (2, 3, {"weight": 0.8}),
+    (3, 0, {"weight": 0.7}),
+    (4, 2, {"weight": 1.2}),
+    (4, 3, {"weight": 0.9})
+])
+
+# Get node attributes
+node_colors = nx.get_node_attributes(H, "color").values()
+
+# Get edge weights
+
+edge_weights = nx.get_edge_attributes(H, "weight").values()
+
+# Plotting Graph
+
+pos = nx.spring_layout(H)
+nx.draw(H, pos, with_labels=True, node_color=list(node_colors), node_size=700, font_size=8, font_color='black', font_weight='bold', arrowsize=20)
+nx.draw_networkx_edge_labels(H, pos, edge_labels={(i, j): f"{w}" for (i, j, w) in H.edges(data='weight')})
+nx.draw_networkx_edges(H, pos, width=list(edge_weights), edge_color=list(edge_weights), edge_cmap=plt.cm.Blues, edge_vmin=0, edge_vmax=max(edge_weights))
+
+plt.show()
+
+
+
 # Reinforcement_Learning_GNN
 
 ###https://collab.dvb.bayern/display/TUMdlma/Exploiting+Edge+Features+in+Graph+Neural+Networks
