@@ -1,4 +1,5 @@
 # Reinforcement_Learning_GNN
+
 ###https://collab.dvb.bayern/display/TUMdlma/Exploiting+Edge+Features+in+Graph+Neural+Networks
 Graph Neural Networks
 These are networks that directly operate on the graph structure. Graph Neural Networks are typically used for the purposes of node classification, edge classification or a classification of the network as a whole. The typical Graph Neural Network learns from two matrices that are constructed from the underlying graph.
@@ -61,3 +62,5 @@ After the message-passing iterations, the final step involves aggregating the hi
 
 5. Prediction or Further Processing:
 The graph-level representation obtained in the readout phase can be used for various tasks. It can serve as input to a downstream machine learning model for tasks such as classification, regression, or clustering
+
+### How MPNN works ?
