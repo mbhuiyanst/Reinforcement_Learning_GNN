@@ -251,26 +251,3 @@ It's important to note that the exact forms of these functions may vary based on
 ###https://collab.dvb.bayern/display/TUMdlma/Exploiting+Edge+Features+in+Graph+Neural+Networks
 
 
-Graph Attention Network:
-In order to overcome the drawbacks of the GCN, the GAT was proposed. It is a non-spectral approach in that the convolutions are performed directly on spatially close neighbours. Attention is a mechanism by which the network finds out how infuential the features of the neighbouring nodes are in learning the feature of the node under consideration. The basic building block of the GAT is the Graph Attention Layer. The following sections explain how the GAT works.
-
-Step 1: Linear Transformation
-The first step performed by the Graph Attention Layer is to apply a linear transformation - Weighted matrix W  to the feature vectors of the nodes. 
-
-Step 2: Computation of Attention Coefficients
-Attention Coefficients determine the relative importance of neighbouring features with respect to each other. They are calculated using the formula:  eij=a(Whi→,Whj→). Here a is function that we determine subject to the restriction that a:RF′×RF′→R. i and j are neighbouring nodes.
-Step 3: Normalization of Attention Coefficients
-Due to the varied strcuture of graphs, nodes can have a different number of neighbours. In order to have a common scaling acroos all neighbourhoods, the Attention coefficients are Normalized. 
-
-αij=exp(LeakyReLU(eij))∑k∈Nexp(LeakyReLU(eij))
-Here N is the Neighbouhood of node i.
-
-Step 4: Computation of Final Output Features
-Now we compute the learned features of nodes. σ is a Non-Linear Transformation.
-h′i→=σ(∑j∈NαijWh′j→)
-
-Step 5: Computation of Multiple Attention Mechanisms
-In order to improve the stability of the learning process Multi-head attention is employed. We compute multiple different attention maps and finally aggregate all the learned representations.
-
-h′i→=σ(1K∑k=1K∑j∈NαkijWkh′j→)
-K denotes the number of independant attention maps used.
