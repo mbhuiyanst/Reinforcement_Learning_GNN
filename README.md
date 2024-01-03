@@ -191,7 +191,13 @@ After the message-passing iterations, the final step involves aggregating the hi
 The graph-level representation obtained in the readout phase can be used for various tasks. It can serve as input to a downstream machine learning model for tasks such as classification, regression, or clustering.
 
 
-Further explanation of MPNN.
+Further explanation of MPNN:
+With in the graph neural network , there are several message passing layers, these are the core building blocks of GNN and the are responsible for combining node and esge information into the node embeddings.
+Lets take an example of a node in a graph, the node collect the information of its direct neighbor,which means performing the message passing, What we end up with is the information about current node state  and the information about our neighbors node states and these states usually denoted wth h. Say currently we are in at time step K, then we perform an aggregation on the neighbours states to combine their information.Finally we put our current state and combined neighbors information together to get a new state or embedding in layers k+1. This message passing done by all node and therefore , we have new embedding for every node in our graph.The size of this new embeddings is the hyper parameter and depends on the graph data we use.We have to perform several times  message passing steps and this will continue until every single node in the graph knows something about others node. This knowledge stored in each of our node embeddings and contains the feature based as well as strctural information about the nodes.Eventually we can use embeddings in oder to perform predictions as they contain all the information about the graph that we need  and this is the basic idea of GNN.
+
+Lets formulate the MPNN operation more mathmatically, the state update for a node u, is mainly perform two alreday introduced operations aggregate and update.
+Aggregate use the states of all direct neighbours v of node u and aggregate them in specific way, then then update operation use the current state in time step k and combines it with the aggregated neighbor states. This formula stays the same for all variants of message passing GNN, the only thing in which they are different is how they are perform update and aggregate functions.
+
 
 
 
