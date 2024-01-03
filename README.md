@@ -198,6 +198,46 @@ Lets take an example of a node in a graph, the node collect the information of i
 Lets formulate the MPNN operation more mathmatically, the state update for a node u, is mainly perform two alreday introduced operations aggregate and update.
 Aggregate use the states of all direct neighbours v of node u and aggregate them in specific way, then then update operation use the current state in time step k and combines it with the aggregated neighbor states. This formula stays the same for all variants of message passing GNN, the only thing in which they are different is how they are perform update and aggregate functions.
 
+# Mathmatical overview:
+
+
+# Message Passing Neural Networks (MPNNs)
+
+In the context of Message Passing Neural Networks (MPNNs), the message passing update and aggregation functions play a crucial role in capturing information from neighboring nodes and updating the node states. The update function typically involves combining information from the current node and its neighbors to generate a new representation for the node.
+
+## Message Passing Update Function
+
+The message obtained from neighboring nodes is computed using a function \(M_t\) that depends on hidden states and edges of the neighboring nodes:
+
+\[ M_t = \sum_{\text{neighbors } w} M_t^{(w)} \]
+
+The function \(M_t^{(w)}\) could involve various operations like linear transformations, non-linear activations, or even learnable parameters.
+
+## Node State Update (Aggregation) Function
+
+The hidden state of node \(V_t\) is updated using a function \(U_t\) that combines the previous hidden state \(H_t\) and the newly obtained message \(M_t\). A common update function is an element-wise summation or a concatenation followed by a linear transformation:
+
+\[ U_t = \text{update}(H_t, M_t) \]
+
+Here, \(\text{update}\) could be defined as:
+
+\[ U_t = \sigma(W_u [H_t, M_t] + b_u) \]
+
+where \(\sigma\) is a non-linear activation function, \(W_u\) and \(b_u\) are learnable parameters.
+
+## Aggregation over Time (Readout) Function
+
+After multiple iterations of message passing, a readout function aggregates information from all nodes to generate a graph-level representation. This function is denoted as \(\text{readout}\) and is responsible for summarizing the information gathered from individual nodes:
+
+\[ \text{Final Feature Vector} = \text{readout}(\{ U_t \}) \]
+
+Common readout functions include summation, mean, max-pooling, or even more complex operations depending on the task.
+
+It's important to note that the exact forms of these functions may vary based on the specific MPNN architecture, and they can be customized according to the requirements of the task at hand.
+
+
+
+
 
 
 
