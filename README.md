@@ -208,9 +208,9 @@ In the context of Message Passing Neural Networks (MPNNs), the message passing u
 ## Message Passing Update Function
 
 The message obtained from neighboring nodes is computed using a function \(M_t\) that depends on hidden states and edges of the neighboring nodes:
+$M_t = ∑_{neighbors w} M_t(w)$
 
 
-M_t = ∑_{neighbors w} M_t(w)
 
 
 The function \(M_t{(w)}\) could involve various operations like linear transformations, non-linear activations, or even learnable parameters.
