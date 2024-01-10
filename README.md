@@ -250,4 +250,53 @@ It's important to note that the exact forms of these functions may vary based on
 
 ###https://collab.dvb.bayern/display/TUMdlma/Exploiting+Edge+Features+in+Graph+Neural+Networks
 
+Implementation of Multi-Agent Reinforcement Learning for Dynamic
+Resource Management in 6G in-X Subnetworks.
+
+Here we will start with in normal scenario, where we  first replicate the GA-Net game algorithm which utilize the Attetion mechanism to reason about potential relationship among subnetworks.GA-Net also utilized improved Hard attention and multi-head self attention to minimize computing complexity.
+
+How GA-Net works?
+
+Graph Model Representation (G):
+
+Models potential interference relationships among subnetworks as a graph model G.
+Each subnetwork receives a current observation at each time step.Then the Observations are encoded into state encodings using multilayer perceptrons (MLP) and Gate Recurrent Units (GRU).
+
+Here Current observations, state encodings, and interference relationships are simplified as oi, si, and ei, respectively.
+ Then, the state encoding ei is used to learn the interference relationships among subnetworks by GA-Net networks, resulting in a high-level state encoding, which fuses contributions from other subnetworks.Then ei is fed into GAT and Hard-Attention as input.
+
+ Hard-Attention:
+ Hard attention is employed to generate a one-hot vector as an output, indicating which subnetworks have potential interference relationships with each other.
+Hard attention outcomes produces, relationships among subnetworks are simplified, and a sub-graph Gi is obtained for each subnetwork.A GRU is used in the hard-attention mechanism to determine the weights of edges, indicating whether there is an interaction between subnetworks.
+
+However, each subnetwork
+has a different degree of relevance to a specific subnetwork,
+which means each edge of the graph Gi has different weights.
+At the same time, the interference between subnetworks can
+be affected by multiple factors and multi-head attention is applied to extract various representation from various state
+feature sub-spaces.Therefore, for sub-graph Gi, a GAT layer
+with multi-head attention is trained to learn the weights of
+subnetworks to subnetwork i in different state feature subspaces, Obtains the joint state encoding of agent i that contains contributions from all other subnetworks.
+
+Also, the traditional  GRU networks cannot make full use of all subnetworks’
+feature information due to a reasonable and short-sighted fact
+that the sequence of subnetworks plays a pivotal role in the
+procedure . Therefore,  the bidirectional GRU (BiGRU)
+model used , instead of traditional GRU, so that the relationship
+between subnetwork i and j also depends on states of other
+subnetworks.In addition, Hard -Attention cannot acheived end-to-end backpropagation gradient , therefore The Gumbel Softmax estimator is adopted to make the hard attention mechanism differentiable, enabling training through end-to-end backpropagation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
