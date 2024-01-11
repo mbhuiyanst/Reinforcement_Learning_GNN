@@ -269,7 +269,7 @@ Here Current observations, state encodings, and interference relationships are s
  Hard attention is employed to generate a one-hot vector as an output, indicating which subnetworks have potential interference relationships with each other.
 Hard attention outcomes produces, relationships among subnetworks are simplified, and a sub-graph Gi is obtained for each subnetwork.A GRU is used in the hard-attention mechanism to determine the weights of edges, indicating whether there is an interaction between subnetworks.
 
-However, each subnetwork
+ Each subnetwork
 has a different degree of relevance to a specific subnetwork,
 which means each edge of the graph Gi has different weights.
 At the same time, the interference between subnetworks can
@@ -285,6 +285,39 @@ procedure . Therefore,  the bidirectional GRU (BiGRU)
 model used , instead of traditional GRU, so that the relationship
 between subnetwork i and j also depends on states of other
 subnetworks.In addition, Hard -Attention cannot acheived end-to-end backpropagation gradient , therefore The Gumbel Softmax estimator is adopted to make the hard attention mechanism differentiable, enabling training through end-to-end backpropagation.
+
+How GAT with multi-head attention works?
+
+
+ Multi-head attention mechanism employed in a Graph Attention Network (GAT) for aggregating information from other subnetworks.
+
+ Query, Key, and Value Computation :
+
+ Query (Qm_i): Computed as the product of the query weight matrix (Wm_q) and the state encoding (ei) of the current subnetwork i, Qm_i=Wm_q . ei
+
+ Key (Km_i): Computed as the product of the key weight matrix (Wm_k) and the state encoding (ei) of the current subnetwork i.
+
+Km_i=Wm_k . ei
+
+Value (Vm_i): Computed as the product of the value weight matrix (Wm_v) and the state encoding (ei) of the current subnetwork i.
+Vm_i= Wm_v . ei
+
+Query-Key Pair Aggregation:
+
+For each subnetwork j in the subgraph Gi, a query-key pair (Qm_j, Vm_j) is received.The weight Wm_i,j is computed as the SoftMax of the dot product of the quary Qm_i and the key Km_i
+scaled by the dimensionality (dk) to prevent vanishing gradients:  wm_i,j = softmax((Qm_i \K_m_j )/ dk)
+
+Aggregated Contribution Encoding:
+
+Using the computed weights  wm_i,j , an aggregated contribution encoding Vm_o is calculated as a weighted sum of the values Vm_j of other subnetworks in Gi.
+
+​
+ Vm_o = ∑ wm_i . Vm_j
+
+ Concatenation of Contributions:
+ Contributions from all heads are concatenated to form the final state embedding: h^\hat{i}:
+ 
+  h^\hat{i} = ||L{m=1} \sigma(∑{j \in Gi} wm_{i,j} \cdot W_{m_s}).
 
 
 
