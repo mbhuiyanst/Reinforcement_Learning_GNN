@@ -6,7 +6,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as f
 
-# Assuming AttentionCritic and Args classes are already defined as per your previous code
 class AttentionCritic(nn.Module):
     def __init__(self, input_shape, args):
         super(AttentionCritic, self).__init__()
@@ -181,7 +180,7 @@ print("Output:", output)
 print("New Hidden State shape:", new_hidden_state.shape)
 print("New Hidden State:", new_hidden_state)
 
-# Assuming the model's output is now a measure of node importance, 
+ 
 # use it to select the top 4 nodes
 importance_scores = output.detach().numpy().flatten()
 top_node_indices = np.argsort(importance_scores)[-4:]  # Indices of the top 4 nodes
