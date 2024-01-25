@@ -27,11 +27,30 @@ class AttentionCritic(nn.Module):
         self.input_shape = input_shape
 
     def forward(self, obs, hidden_state):
-        size = obs.shape[0]  # batch_size * n_agents
+        original_size = obs.shape[0]
+        size = obs.shape[0]  
+        remainder = size % self.args.n_agents
+        if remainder > 0:
+            padding_size = self.args.n_agents - remainder
+            pad_obs = torch.zeros((padding_size, obs.shape[1]), device=obs.device)
+            obs = torch.cat([obs, pad_obs], dim=0)
+            pad_hidden = torch.zeros((padding_size, hidden_state.shape[1]), device=hidden_state.device)
+            hidden_state = torch.cat([hidden_state, pad_hidden], dim=0)
+            size = obs.shape[0]  # Update size after padding
+
+
+        #size = obs.shape[0]  # batch_size * n_agents
         obs_encoding = f.relu(self.encoding(obs))
         h_in = hidden_state.reshape(-1, self.args.rnn_hidden_dim)
-        h_out = self.h(obs_encoding, h_in)
 
+        print("h_in_shape:", h_in.shape)#For debuging
+        print("h_in_Output:", h_in)
+
+        h_out = self.h(obs_encoding, h_in)
+        print("h_out_shape:", h_out.shape)
+        print("hi_out_Output:", h_out)
+
+  
         # Hard Attention
         if self.args.hard:
             hard_weights = self.hard_attention(h_out, size)
@@ -45,49 +64,60 @@ class AttentionCritic(nn.Module):
 
         # Combining with decoding
         final_input = torch.cat([h_out, soft_output], dim=-1)
-        print(final_input)
+        print("final_input_shape after concatanation:", final_input.shape)
+        #print("final_input:", final_input)
 
         output = self.decoding(final_input)
+        print("output_shape after decding:", output.shape)#for debugging
+
+
+        if remainder > 0:
+            output = output[:original_size]
+            h_out = h_out[:original_size]
 
         return output, h_out
 
     def hard_attention(self, h_out, size):
-        #print("Shape of h_out before reshaping:", h_out.shape)
-        
-        new_shape = [size // self.args.n_agents, self.args.n_agents, self.args.rnn_hidden_dim]
+        batch_size_per_agent = size // self.args.n_agents
+        new_shape = [batch_size_per_agent, self.args.n_agents, self.args.rnn_hidden_dim]
         h = h_out.reshape(new_shape)
 
 
-        #h = h_out.reshape(-1, self.args.n_agents, self.args.rnn_hidden_dim)  
+        # Reshape h_out to the new shape
+        h = h_out.reshape(new_shape)
+
+        # Continue with the hard attention mechanism as before
         input_hard = []
         for i in range(self.args.n_agents):
-            h_i = h[:, i]  # (batch_size, rnn_hidden_dim)
+            h_i = h[:, i]  # (batch_size_per_agent, rnn_hidden_dim)
             h_hard_i = []
-            for j in range(self.args.n_agents):  
+            for j in range(self.args.n_agents):
                 if j != i:
                     h_hard_i.append(torch.cat([h_i, h[:, j]], dim=-1))
-              
             h_hard_i = torch.stack(h_hard_i, dim=0)
             input_hard.append(h_hard_i)
-            
+
         input_hard = torch.stack(input_hard, dim=-2)
-            
         input_hard = input_hard.view(self.args.n_agents - 1, -1, self.args.rnn_hidden_dim * 2)
-        h_hard = torch.zeros((2 * 1, size, self.args.rnn_hidden_dim))  
+        
+        # Initialize the hidden state for the GRU
+        h_hard = torch.zeros((2 * 1, batch_size_per_agent * self.args.n_agents, self.args.rnn_hidden_dim))
         if self.args.cuda:
             h_hard = h_hard.cuda()
-        h_hard, _ = self.hard_bi_GRU(input_hard, h_hard)  
-        h_hard = h_hard.permute(1, 0, 2)  # (batch_size * n_agents, n_agents - 1, rnn_hidden_dim * 2)
-        h_hard = h_hard.reshape(-1, self.args.rnn_hidden_dim * 2)  # (batch_size * n_agents * (n_agents - 1), rnn_hidden_dim * 2)
 
-           
+        # Pass the input through the bidirectional GRU
+        h_hard, _ = self.hard_bi_GRU(input_hard, h_hard)
+        h_hard = h_hard.permute(1, 0, 2)
+        h_hard = h_hard.reshape(-1, self.args.rnn_hidden_dim * 2)
+
+        # Compute hard weights
         hard_weights = self.hard_encoding(h_hard)
         hard_weights = f.gumbel_softmax(hard_weights, tau=0.01)
-        #print(hard_weights)
         hard_weights = hard_weights[:, 1].view(-1, self.args.n_agents, 1, self.args.n_agents - 1)
         hard_weights = hard_weights.permute(1, 0, 2, 3)
-       
+
         return hard_weights
+
        
     def soft_attention(self, h_out, hard_weights, size):
         q = self.q(h_out)
@@ -112,6 +142,7 @@ class AttentionCritic(nn.Module):
             x.append(x_i)
 
         x = torch.stack(x, dim=0).reshape(batch_size, self.args.attention_dim)
+        
         return x
 
 #Define Parameters and Model
@@ -123,7 +154,7 @@ class Args:
         self.n_actions = 10        # example value
         self.n_agents = 5          # example value
         self.cuda = False         # set to True if using GPU
-        self.hard = False  
+        self.hard = True
         self.input_shape = 256 
 
 
@@ -230,7 +261,7 @@ def calculate_node_importance(output, G, channel, default_importance=0):
 
     return node_importance
 # Select a specific channel
-selected_channel = 0
+selected_channel = 2
 
 # Calculate node importance for nodes in the selected channel
 node_importance = calculate_node_importance(output, G, selected_channel)
